@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<style>
+
+.heading {
+margin-right: -23%;
+}
+
+
+  body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  /* background: #0d0c2d; */
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(1, 160px);
+  grid-gap: 80px;
+  margin: auto 0;
+}
+
+@media (min-width: 420px) and (max-width: 659px) {
+  .container {
+    grid-template-columns: repeat(2, 160px);
+  }
+}
+
+@media (min-width: 660px) and (max-width: 899px) {
+  .container {
+    grid-template-columns: repeat(3, 160px);
+  }
+}
+
+@media (min-width: 900px) {
+  .container {
+    grid-template-columns: repeat(4, 160px);
+        margin-left: -12%;
+  }
+}
+
+.container .box {
+  width: 100%;
+}
+
+.container .box h2 {
+  display: block;
+  text-align: center;
+ 
+}
+
+.container .box .chart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 40px;
+  line-height: 160px;
+  height: 160px;
+  
+}
+.container .box .cpuchart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 40px;
+  line-height: 160px;
+  height: 160px;
+  
+}
+.container .box canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50%;
+  width: 50%;
+}
+.number
+{
+      font-size: 21px;
+    font-weight: bold;
+}
+</style>
+
+  </head>
+<body>
+  <div class="heading">
+    <h1>System Health Check</h1>
+  <h4>Using Server Side Events API </h4>
+</div> 
+
+<div class="container">
+
+  <div class="box">        
+     <div class="chart"  id="cpuLoad" data-percent="0"  data-scale-color="#ffb400">
+       <span  class="number"></span>
+     </div>
+    <h2>CpuLoad</h2>
+  </div>
+  <div class="box">        
+     <div class="chart"  id="totalmem" data-percent="0"  data-scale-color="#ffb400">
+       <span  class="number"></span>
+     </div>
+    <h2>TotalMemory</h2>
+  </div>
+  <div class="box">
+    <div class="chart" id="memavail" data-percent="0" data-scale-color="#ffb400"><span  class="number"></span></div>
+    <h2>MemoryAvailable</h2>
+  </div>
+  <div class="box">
+    <div class="chart" id="memused" data-percent="0" data-scale-color="#ffb400"><span  class="number"></span></div>
+    <h2>MemoryUsed</h2>
+  </div>
+  </div>
+</div>
+<script type="text/javascript" src="./jquery-3.6.1.min.js">  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/easypiechart.min.js"></script>
+<script src="./jquery.easypiechart.js"></script>
+<script>
+if(typeof(EventSource) !== "undefined") {
+  console.log("ifevent");
+ 
+  var source = new EventSource("server_time.php");
+  source.onmessage = function(event) 
+  {
+  let text = event.data;
+   console.log(event.data)
+   const myArray = text.split("-"); 
+  var totalmem=document.getElementById("totalmem");
+  var memavail=document.getElementById("memavail");
+  var memused=document.getElementById("memused");
+      for (var i = 0; i < myArray.length; i++) {
+        var nObjKey=myArray[i].split(":")[0].trim();
+        //var nObjValue=myArray[i].split(":")[1].trim();   
+
+ if(nObjKey ==="CPULoad")
+{
+   var element = document.querySelector('#cpuLoad');
+    var cpuLoadVal=myArray[i].split(":")[1].trim();
+    console.log("cpuLoad",cpuLoadVal);
+    $("#cpuLoad").data('easyPieChart').update(cpuLoadVal);
+var chart = new EasyPieChart(element, {
+     size: 160,
+      lineWidth: 12,
+     scaleColor:'#dfe0e0',
+    scaleLength: (parseFloat(cpuLoadVal)),
+  onStep: function(from, to, currentValue) {
+    console.log( this.el)
+    this.el.querySelector('.number').innerText = (parseFloat(cpuLoadVal))+'%';
+  },
+});
+
+}
+   else if(nObjKey ==="TOT_MEM")
+  {
+     var element = document.querySelector('#totalmem');
+    var totalMemVal=myArray[i].split(":")[1].trim();
+    console.log("TOT_MEM",totalMemVal);
+    $("#totalmem").data('easyPieChart').update(totalMemVal);
+var chart = new EasyPieChart(element, {
+     size: 160,
+     lineWidth: 12,
+    scaleLength: (parseFloat(totalMemVal)),
+  onStep: function(from, to, currentValue) {
+    console.log( this.el)
+    this.el.querySelector('.number').innerText = (parseFloat(totalMemVal))+'GB';
+  },
+});
+  }
+   else if(nObjKey ==="AVAIL_MEM")
+   {
+    // console.log("AVAIL_MEM",availmemValue);
+     var element = document.querySelector('#memavail');
+    var availmemValue=myArray[i].split(":")[1].trim();
+    $("#memavail").data('easyPieChart').update(availmemValue);
+    var chart = new EasyPieChart(element, {
+    size: 160,
+    scaleLength: (parseFloat(availmemValue)),
+    onStep: function(from, to, currentValue) {
+    console.log( this.el)
+    this.el.querySelector('.number').innerText = (parseFloat(availmemValue))+'GB';
+  },
+});
+   }
+      else if(nObjKey === "MEM_USED")
+   {
+    console.log("MEM_USED",memUsedValue);
+    var element = document.querySelector('#memused');
+    var memUsedValue=myArray[i].split(":")[1].trim();
+    $("#memused").data('easyPieChart').update(memUsedValue);
+var chart = new EasyPieChart(element, {
+     size: 160,
+    scaleLength: (parseFloat(memUsedValue)),
+  onStep: function(from, to, currentValue) {
+    console.log( this.el)
+    this.el.querySelector('.number').innerText = (parseFloat(memUsedValue))+'GB';
+  },
+});
+   }
+  }
+  };
+} else {
+  console.log("hello else");
+  document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+}
+$(document).ready(function() {
+   $(function() {   
+    //data-percent="73"
+  $('.chart').easyPieChart({
+    size: 160,
+    barColor: "#17d3e6",
+    scaleLength: 0,
+    lineWidth: 12,
+    trackColor: "#373737",
+    lineCap: "circle",
+    animate: 2000,
+  });
+}); 
+});
+</script>
+
+</body>
+</html>
+
+
+
