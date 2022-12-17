@@ -13,10 +13,7 @@ $wmi = new COM('WinMgmts:\\\\.');
 			$cpuload += $cpu->LoadPercentage;
 			$cpu_count++;
 		}
-		
-
-
-
+	
 $res = $wmi->ExecQuery('SELECT FreePhysicalMemory,FreeVirtualMemory,TotalSwapSpaceSize,TotalVirtualMemorySize,TotalVisibleMemorySize FROM Win32_OperatingSystem');
 		$mem = $res->ItemIndex(0);
 		$memtotal = round($mem->TotalVisibleMemorySize / 1000000,2);
@@ -30,4 +27,5 @@ $res = $wmi->ExecQuery('SELECT FreePhysicalMemory,FreeVirtualMemory,TotalSwapSpa
 		echo "data: AVAIL_MEM: {$memavailable}-\n";
 		echo "data: MEM_USED: {$memused}\n\n";
 	//echo 'data: {"cpuload":"{$cpu_count}","memtotal":"{$memtotal}"\n\n}';
+	flush();
 ?>

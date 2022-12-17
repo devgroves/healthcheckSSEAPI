@@ -6,8 +6,6 @@
 .heading {
 margin-right: -23%;
 }
-
-
   body {
   margin: 0;
   padding: 0;
@@ -124,7 +122,6 @@ margin-right: -23%;
 <script src="./jquery.easypiechart.js"></script>
 <script>
 if(typeof(EventSource) !== "undefined") {
-  console.log("ifevent");
  
   var source = new EventSource("server_time.php");
   source.onmessage = function(event) 
@@ -136,8 +133,7 @@ if(typeof(EventSource) !== "undefined") {
   var memavail=document.getElementById("memavail");
   var memused=document.getElementById("memused");
       for (var i = 0; i < myArray.length; i++) {
-        var nObjKey=myArray[i].split(":")[0].trim();
-        //var nObjValue=myArray[i].split(":")[1].trim();   
+        var nObjKey=myArray[i].split(":")[0].trim();   
 
  if(nObjKey ==="CPULoad")
 {
@@ -147,11 +143,11 @@ if(typeof(EventSource) !== "undefined") {
     $("#cpuLoad").data('easyPieChart').update(cpuLoadVal);
 var chart = new EasyPieChart(element, {
      size: 160,
-      lineWidth: 12,
+      lineWidth: 10,
      scaleColor:'#dfe0e0',
     scaleLength: (parseFloat(cpuLoadVal)),
   onStep: function(from, to, currentValue) {
-    console.log( this.el)
+    //console.log( this.el)
     this.el.querySelector('.number').innerText = (parseFloat(cpuLoadVal))+'%';
   },
 });
@@ -168,7 +164,7 @@ var chart = new EasyPieChart(element, {
      lineWidth: 12,
     scaleLength: (parseFloat(totalMemVal)),
   onStep: function(from, to, currentValue) {
-    console.log( this.el)
+    //console.log( this.el)
     this.el.querySelector('.number').innerText = (parseFloat(totalMemVal))+'GB';
   },
 });
@@ -183,7 +179,7 @@ var chart = new EasyPieChart(element, {
     size: 160,
     scaleLength: (parseFloat(availmemValue)),
     onStep: function(from, to, currentValue) {
-    console.log( this.el)
+    // console.log( this.el)
     this.el.querySelector('.number').innerText = (parseFloat(availmemValue))+'GB';
   },
 });
@@ -198,7 +194,7 @@ var chart = new EasyPieChart(element, {
      size: 160,
     scaleLength: (parseFloat(memUsedValue)),
   onStep: function(from, to, currentValue) {
-    console.log( this.el)
+    // console.log( this.el)
     this.el.querySelector('.number').innerText = (parseFloat(memUsedValue))+'GB';
   },
 });
@@ -206,7 +202,6 @@ var chart = new EasyPieChart(element, {
   }
   };
 } else {
-  console.log("hello else");
   document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
 }
 $(document).ready(function() {
