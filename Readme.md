@@ -26,12 +26,8 @@ Refer above links to download and install xampp and Visualstudio respectively.
 3.once the data is received we are showing it in UI using `easyPieChart`.
 ## How To Run the created project?
 1.open xampp,Start Apache server.
-
 2.Open [http://localhost:8080//serversideevents/view.html](http://localhost:8080//serversideevents/view.html) to view it in your browser.
-
 3.The page will reload when you make changes.
-
 4.You may also see any lint errors in the console.
-
 ## Demo Snap:
 ![Alt text](./systemhealthcheck.gif)
