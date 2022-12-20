@@ -21,13 +21,13 @@ Refer above links to download and install xampp and Visualstudio respectively.
  5. And finally, we have used the PHP flush() function to make sure that the data is sent right away, rather than buffered until the PHP code is complete.
   `flush()` 
 ### How Data Received on client browser??
-1.To open a connection to the server to begin receiving events from it, create a new EventSource object with the URL of a script that generates the events.
-2.Once event source had instantiated  then client browser can begin listening for messages from the server by attaching a handler for the message event.'
-3.once the data is received we are showing it in UI using `easyPieChart`.
+ 1.To open a connection to the server to begin receiving events from it, create a new EventSource object with the URL of a script that generates the events__
+ 2.Once event source had instantiated  then client browser can begin listening for messages from the server by attaching a handler for the message event __
+ 3.once the data is received we are showing it in UI using `easyPieChart`.
 ## How To Run the created project?
-1.open xampp,Start Apache server.
-2.Open [http://localhost:8080//serversideevents/view.html](http://localhost:8080//serversideevents/view.html) to view it in your browser.
-3.The page will reload when you make changes.
-4.You may also see any lint errors in the console.
+ 1.open xampp,Start Apache server__
+ 2.Open [http://localhost:8080//serversideevents/view.html](http://localhost:8080//serversideevents/view.html) to view it in your browser__
+ 3.The page will reload when you make changes__
+ 4.You may also see any lint errors in the console__
 ## Demo Snap:
 ![Alt text](./systemhealthcheck.gif)
