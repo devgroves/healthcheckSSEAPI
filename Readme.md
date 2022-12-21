@@ -20,7 +20,7 @@ Refer above links to download and install xampp and Visualstudio respectively.
  4. The extracted data of cpu performance and memory details of a working system which are sent through HTML5 server-sent events must start with the text data:followed by the actual message text and the new line character sequence (\n\n).
  5. And finally, we have used the PHP flush() function to make sure that the data is sent right away, rather than buffered until the PHP code is complete.
   `flush()` 
-### How Data Received on client browser?? 1. It is important to set the headers to be stream on server-side.
+### How Data Received on client browser?? 
  1. To open a connection to the server to begin receiving events from it, create a new EventSource object with the URL of a script that generates the events.
  2. Once event source had instantiated  then client browser can begin listening for messages from the server by attaching a handler for the message event .
  3. once the data is received we are showing it in UI using customized `easyPieChart`.
